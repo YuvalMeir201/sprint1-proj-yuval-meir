@@ -1,0 +1,18 @@
+h1{
+    background-color: rgb(113, 191, 218);
+    text-align: center;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.cell {
+    border:1px solid white;
+    background: #999999;
+    width: 20px;
+    height: 20px;
+  }
+  .board-container{
+      text-align: center;
+      background-color: green;
+  }
+
+  
