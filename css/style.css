@@ -1,18 +1,82 @@
-h1{
-    background-color: rgb(113, 191, 218);
-    text-align: center;
-    margin-left: 100px;
-    margin-right: 100px;
+body {
+  text-align: center;
+}
+.sky {
+  background-image: url("../img/sky1.jpeg");
+  background-repeat: no-repeat ;
+  background-size: cover;
+}
+
+h1 {
+  color: rgb(238, 217, 188);
+  text-shadow: 10px 10px 3px black;
+  text-align: center;
+  font-size: 72px;
+
+}
+h2 {
+  color: rgb(238, 217, 188);
+  text-shadow: 10px 10px 3px black;
+  text-align: center;
+  font-size: 36px;
+}
+button {
+  border: none;
+  color: white;
+  background-color: rgba(88, 158, 228, 0.866);
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  margin: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.live {
+  padding: 5px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.clock {
+  padding: 5px;
+  font-size: 25px;
+  font-weight: bold;
 }
 .cell {
-    border:1px solid white;
-    background: #999999;
-    width: 20px;
-    height: 20px;
-  }
-  .board-container{
-      text-align: center;
-      background-color: green;
+  border: 1px solid white;
+  background:  green;;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.board-container {
+  text-align: center;
+  background-color: green;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+  height: 300px;
+}
+footer{
+    background-color: lightgrey;
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 2px solid rgb(95, 93, 93);
+}
+
+  .smiley{
+      height: 70px;
+      width: 70px;
+      border:1px solid black;
+      border-radius: 50%;
   }
 
-  
+ .cell-pressed{
+     background-color:rgb(188, 143, 47)
+  }
