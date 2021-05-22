@@ -10,7 +10,7 @@ var gBoard;
 var gInterval;
 var gTimer = 0;
 var gLives;
-
+var countShown = 0;
 var gLevel = {
   size: 4,
   mines: 2,
@@ -25,19 +25,16 @@ var gGame = {
 
 function initGame() {
   gLives = 3;
-
-  var gGame = {
-    isOn: false,
+  gGame = {
+    isOn: true,
     shownCount: 0,
     markedCount: 0,
     secsPassed: 0,
   };
-
   gBoard = buildBoard();
-  addBomb();
   printMat(gBoard, ".board-container");
-  gGame.isOn = true;
   renderLives();
+  countShown = 0;
 }
 
 function setDifficult(size, numMines) {
@@ -64,7 +61,6 @@ function buildBoard() {
   console.table(board);
   return board;
 }
-
 
 function printMat(mat, selector) {
   var strHTML = '<table border="0"><tbody>';
@@ -99,33 +95,26 @@ function mouseAction(ev) {
 function cellClicked(elCell) {
   var cellCoord = getCellCoord(elCell.classList[1]);
   var currCell = gBoard[cellCoord.i][cellCoord.j];
-  console.log(currCell);
   elCell.classList.add("cell-pressed");
-  //if(!gGame.isOn) return;
   if (currCell.isMarked === true) return;
   if (currCell.isShown === true) return;
-
   if (checkFirstMove()) {
     StartTimer();
+    addBomb();
+    printMat(gBoard, ".board-container");
+    renderCell(cellCoord, EMPTY);
     currCell.isShown = true;
-    if (currCell.isMine === true) {
-      currCell.isMine = false;
-      addBomb();
-      setMinesNegsCount(gBoard);
-      printMat(gBoard, ".board-container");
-      renderCell(cellCoord, EMPTY);
-    }
+    return;
   }
+  currCell.isShown = true;
   if (currCell.isMine) {
     if (gLives > 0) {
       gLives--;
       renderLives();
       renderCell(cellCoord, BOMB);
-      currCell.isShown = true;
       return;
     } else {
       renderCell(cellCoord, BOMB);
-      currCell.isShown = true;
       gameOver();
       return;
     }
@@ -134,14 +123,10 @@ function cellClicked(elCell) {
     if (currCell.minesAroundCount === 0) {
       expandShown(gBoard, elCell, cellCoord.i, cellCoord.j);
       renderCell(cellCoord, EMPTY);
-      elCell.classList.add("cell-pressed");
-      currCell.isShown = true;
     } else if (currCell.minesAroundCount > 0) {
       renderCell(cellCoord, currCell.minesAroundCount);
-      elCell.classList.add("cell-pressed");
-      currCell.isShown = true;
     }
-    if(checkGameOver()){
+    if (countShown === gLevel.size ** 2) {
       victory();
     }
   }
@@ -155,13 +140,14 @@ function expandShown(board, elCell, coordI, coordJ) {
       if (j < 0 || j >= board[0].length) continue;
       if (i === coordI && j === coordJ) continue;
       var currCell = board[i][j];
+      if (currCell.isMine) return;
+      var elBox = document.querySelector(`.cell-${i}-${j}`);
+      elBox.classList.add("cell-pressed");
       currCell.isShown = true;
       if (currCell.minesAroundCount > 0) {
-        currCell.classList.add("cell-pressed");
         renderCell({ i: i, j: j }, currCell.minesAroundCount);
         currCell.isShown = true;
       } else if (currCell.minesAroundCount === 0) {
-        currCell.classList.add("cell-pressed");
         renderCell({ i: i, j: j }, EMPTY);
         currCell.isShown = true;
       }
@@ -169,14 +155,14 @@ function expandShown(board, elCell, coordI, coordJ) {
   }
 }
 function checkGameOver(gBoard) {
-  for(var i=0;i<gBoard.length;i++){
-    for (var j=0;j<gBoard[0].length;j++){
-      var currCell=gBoard[i][j];
-      if(currCell.isMine){
-        if(!currCell.isMarked) return false;
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard[0].length; j++) {
+      var currCell = gBoard[i][j];
+      if (currCell.isMine) {
+        if (!currCell.isMarked) return false;
       }
-      if(currCell.isMine===false){
-        if(!currCell.isShown) return false;
+      if (currCell.isMine === false) {
+        if (!currCell.isShown) return false;
       }
     }
   }
@@ -205,7 +191,7 @@ function renderLives() {
 }
 
 function renderFlag(cellCoord) {
- // if (!gGame.isOn) return;
+  // if (!gGame.isOn) return;
   var currCell = gBoard[cellCoord.i][cellCoord.j];
   if (currCell.isShown) return;
   if (!currCell.isMarked) {
@@ -215,6 +201,7 @@ function renderFlag(cellCoord) {
     currCell.isMarked = false;
     renderCell(cellCoord, EMPTY);
   }
+  console.log(currCell);
 }
 function StartTimer() {
   var elTimer = document.querySelector(".clock span");
@@ -229,18 +216,19 @@ function stopTimer() {
   gGame.secsPassed = 0;
 }
 function gameOver() {
-  elTitle=document.querySelector('h2');
-  elTiltle.innerText= 'Game Over!';
+  elSmiley = document.querySelector("button smiley");
+  elSmiley.innerText = LOSE;
   gGame.isOn = false;
   stopTimer();
 }
 
 function victory() {
-  elTitle=document.querySelector('h2');
-  elTiltle.innerText= 'You Win!';
-  gGame.isOn=false;
+  elSmiley = document.querySelector("button smiley");
+  elsmiley.innerText = WIN;
+  gGame.isOn = false;
   stopTimer();
 }
+
 function restartGame() {
   stopTimer();
   initGame();

@@ -3,7 +3,7 @@ body {
 }
 .sky {
   background-image: url("../img/sky1.jpeg");
-  background-repeat: no-repeat ;
+  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -12,7 +12,6 @@ h1 {
   text-shadow: 10px 10px 3px black;
   text-align: center;
   font-size: 72px;
-
 }
 h2 {
   color: rgb(238, 217, 188);
@@ -43,16 +42,16 @@ button {
 }
 .cell {
   border: 1px solid white;
-  background:  green;;
+  background: green;
   width: 20px;
   height: 20px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
-table{
-    margin-left: auto;
-    margin-right: auto;
+table {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .board-container {
@@ -63,20 +62,20 @@ table{
   position: relative;
   height: 300px;
 }
-footer{
-    background-color: lightgrey;
-    margin-top: 10px;
-    padding: 10px;
-    border-top: 2px solid rgb(95, 93, 93);
+footer {
+  background-color: lightgrey;
+  margin-top: 10px;
+  padding: 10px;
+  border-top: 2px solid rgb(95, 93, 93);
 }
 
-  .smiley{
-      height: 70px;
-      width: 70px;
-      border:1px solid black;
-      border-radius: 50%;
-  }
+.smiley {
+  height: 70px;
+  width: 70px;
+  border: 1px solid black;
+  border-radius: 50%;
+}
 
- .cell-pressed{
-     background-color:rgb(188, 143, 47)
-  }
+.cell-pressed {
+  background-color: rgb(188, 143, 47);
+}
